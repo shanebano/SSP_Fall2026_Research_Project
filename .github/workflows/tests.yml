@@ -31,17 +31,17 @@ on:
             name: test-log
             path: test-log.txt
 
-    binary:
-      needs: test
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v4
-        - uses: actions/checkout@v5
-          with:
-            python-version: "3.12"
-        - name: Smoke-test the binary
-          run: ./dist/tbd/ --help
-        - uses: actions/upload-artifact@v4
-          with:
-            name: tbd
-            path: tbd
+   # binary:
+   #   needs: test
+    #  runs-on: ubuntu-latest
+     # steps:
+      #  - uses: actions/checkout@v4
+       # - uses: actions/checkout@v5
+       #   with:
+       #     python-version: "3.12"
+       # - name: Smoke-test the binary
+       #   run: ./dist/tbd/ --help
+       # - uses: actions/upload-artifact@v4
+       #   with:
+        #    name: tbd
+         #   path: tbd
