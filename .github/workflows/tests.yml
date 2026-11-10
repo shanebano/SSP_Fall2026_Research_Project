@@ -19,7 +19,7 @@ on:
 
         - name: Install dependencies
         #mock Gemma tests
-          run: |
+          run: 
             grep -vE '^(torch|transformers|huggingface-hub|pyinstaller)==' requirements.txt > ci-requirements.txt
             pip install -r ci-requirements.txt
             hadolint --version 
@@ -30,18 +30,20 @@ on:
           with:
             name: test-log
             path: test-log.txt
-
-   # binary:
-   #   needs: test
-    #  runs-on: ubuntu-latest
-     # steps:
-      #  - uses: actions/checkout@v4
-       # - uses: actions/checkout@v5
-       #   with:
-       #     python-version: "3.12"
-       # - name: Smoke-test the binary
-       #   run: ./dist/tbd/ --help
-       # - uses: actions/upload-artifact@v4
-       #   with:
-        #    name: tbd
-         #   path: tbd
+        - name: Run tests
+          run: 
+            pytest > test-log.txt || true
+  binary:
+     needs: test
+     runs-on: ubuntu-latest
+     steps:
+       - uses: actions/checkout@v4
+       - uses: actions/setup-python@v5
+         with:
+           python-version: "3.12"
+       - name: Smoke-test the binary
+         run: ./dist/tbd/ --help
+       - uses: actions/upload-artifact@v4
+         with:
+          name: tbd
+          path: tbd
