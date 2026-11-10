@@ -1,0 +1,12 @@
+# Task-1: Read PDF, YAML Output, Gemma-3-1B
+pypdf==6.17.0
+PyYAML==6.0.3
+torch==2.15.0
+transformers==5.22.0
+huggingface-hub==2.4.0
+#Task-3: Binary & results table
+hadolint-bin==2.15.1
+pandas==3.0.5
+#Test & Packages
+pytest==9.1.1
+pyinstaller==6.22.3
