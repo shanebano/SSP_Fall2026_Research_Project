@@ -3,8 +3,8 @@
 ## Team
 
 Shane Banachowski | shb0064@auburn.edu | Tasks 2 & 4
-Joseph Wilkerson  | 
-Rett Wilson       |
+Joseph Wilkerson  | Jaw0216@auburn.edu | Task 1
+Rett Wilson       | Jew0063@auburn.edu | Task 3
 
 **Task-1 
 
