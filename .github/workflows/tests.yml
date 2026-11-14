@@ -1,49 +1,37 @@
 name: tests
 
-#run test case for task1,2,3 when code pushed 
+# Runs the Task-1, Task-2 and Task-3 test cases on every push and pull request.
 on:
   push:
   pull_request:
   workflow_dispatch:
 
-  jobs:
-    test:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v4
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-        - uses: actions/setup-python@v5
-          with:
-            python-version: "3.12"
-            cache: pip
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
 
-        - name: Install dependencies
-        #mock Gemma tests
-          run: 
-            grep -vE '^(torch|transformers|huggingface-hub|pyinstaller)==' requirements.txt > ci-requirements.txt
-            pip install -r ci-requirements.txt
-            hadolint --version 
+      # Gemma is mocked in the tests, so the heavy model and build libraries are skipped.
+      - name: Install dependencies
+        run: |
+          grep -vE '^(torch|transformers|huggingface-hub|pyinstaller)==' requirements.txt > ci-requirements.txt
+          pip install -r ci-requirements.txt
+          hadolint --version
 
-        - name: Run test cases (Task-1, Task-2, Task-3)
-          if: always()
-          uses: actions/upload-artifact@v4
-          with:
-            name: test-log
-            path: test-log.txt
-        - name: Run tests
-          run: 
-            pytest > test-log.txt || true
-  binary:
-     needs: test
-     runs-on: ubuntu-latest
-     steps:
-       - uses: actions/checkout@v4
-       - uses: actions/setup-python@v5
-         with:
-           python-version: "3.12"
-       - name: Smoke-test the binary
-         run: ./dist/tbd/ --help
-       - uses: actions/upload-artifact@v4
-         with:
-          name: tbd
-          path: tbd
+      - name: Run tests
+        run: |
+          set -o pipefail
+          pytest -v 2>&1 | tee test-log.txt
+
+      - name: Upload test log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-log
+          path: test-log.txt

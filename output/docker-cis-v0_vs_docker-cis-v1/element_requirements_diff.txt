@@ -1,0 +1,2 @@
+Auditing Docker files,Ensure auditing is configured for Docker files and directories - docker.sock
+Auditing Docker files,Ensure auditing is configured for Docker files and directories - docker.socket

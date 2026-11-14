@@ -1,0 +1,19 @@
+Auditing Docker files,Ensure auditing is configured for Docker files and directories - docker.sock
+Auditing Docker files,Ensure auditing is configured for Docker files and directories - docker.socket
+Authorization,Ensure the default cgroup usage has been confirmed
+Base device size,Ensure that authorization for Docker client commands is enabled
+Centralized and remote logging,Ensure centralized and remote logging is configured
+Daemon-wide custom seccomp profile,Ensure that experimental features are not implemented in production
+Default ulimit,Ensure base device size is not changed until needed
+Docker client commands,Ensure that authorization for Docker client commands is enabled
+Live Restore,Ensure that a daemon-wide custom seccomp profile is applied if appropriate
+Section 2 other,Ensure base device size is not changed until needed
+Section 2 other,Ensure centralized and remote logging is configured
+Section 2 other,Ensure that a daemon-wide custom seccomp profile is applied if appropriate
+Section 2 other,Ensure that experimental features are not implemented in production
+Ulimit configuration,Ensure the default ulimit is configured appropriately
+aufs storage driver,Ensure devicemapper storage driver is not used
+cgroup usage,Enable user namespace support
+cgroup usage confirmation,Enable user namespace support
+enable user namespace support,Ensure the default cgroup usage has been confirmed
+ulimit configuration,Ensure the default ulimit is configured appropriately

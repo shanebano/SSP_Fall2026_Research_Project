@@ -2,7 +2,7 @@
 import pytest
 import yaml
 
-from cisdiff import comparator as comparator
+from cisdiff import comparator as cmp
 
 A = {
     "element1": {"name": "Container user", "requirements": ["Ensure a user is created"]},
@@ -21,13 +21,13 @@ def _write(tmp_path, name, data):
     return p
 
 def test_load_yaml_pair(tmp_path):
-    k1, k2 = cmp.test_load_yaml_pair(_write(tmp_path, "a-kdes.yaml",A), _write(tmp_path, "b-kdes.yaml", B))
+    k1, k2 = cmp.load_yaml_pair(_write(tmp_path, "a-kdes.yaml",A), _write(tmp_path, "b-kdes.yaml", B))
     assert k1["element1"]["name"] == "Container user"
     assert len(k2) == 2
     bad = tmp_path / "bad.yaml"
     bad.write_text("- just\n- a list\n")
     with pytest.raises(ValueError):
-        cmp.test_load_yaml_pair(bad, bad)
+        cmp.load_yaml_pair(bad, bad)
 
 def test_compare_element_names(tmp_path):
     out = cmp.compare_element_names(A, B, tmp_path / "names.txt")

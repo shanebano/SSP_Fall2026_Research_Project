@@ -1,0 +1,12 @@
+FilePath,DefaultSeverity,RULEID,COUNT
+data/dockerfiles/app1/Dockerfile,error,DL3004,1
+data/dockerfiles/app1/Dockerfile,error,DL3020,1
+data/dockerfiles/app1/Dockerfile,info,DL3009,1
+data/dockerfiles/app1/Dockerfile,info,DL3059,1
+data/dockerfiles/app1/Dockerfile,info,DL3066,1
+data/dockerfiles/app1/Dockerfile,warning,DL3002,1
+data/dockerfiles/app1/Dockerfile,warning,DL3006,1
+data/dockerfiles/app2/Dockerfile,error,DL3011,1
+data/dockerfiles/app2/Dockerfile,warning,DL3007,1
+data/dockerfiles/app2/Dockerfile,warning,DL3013,1
+data/dockerfiles/app2/Dockerfile,warning,DL3042,1
