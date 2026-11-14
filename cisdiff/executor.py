@@ -10,6 +10,7 @@
 from __future__ import annotations
 
 import json
+import re
 import shutil
 import subprocess
 from pathlib import Path
@@ -23,18 +24,17 @@ NO_DIFF_FOUND = "NO DIFFERENCES FOUND"
 NO_MAPPING_FOUND = "NO MAPPING FOUND"
 CSV_HEADERS = ["FilePath", "DefaultSeverity", "RULEID", "COUNT"]
 
-# CIS Docker Benchmark section 4 (Dockerfile) topics -> Hadolint rules.
-# A difference line maps to a rule when it contains any of the keywords.
+# CIS Docker Benchmark section 4 ("Container Images and Build File") requirements that Hadolint
+# can check, as word-bounded patterns -> Hadolint rules. Other CIS sections are not about
+# Dockerfiles, so their differences map to nothing.
 RULE_MAP = [
-    (("user", "root"), ["DL3002"]),
-    (("sudo",), ["DL3004"]),
-    (("base image", "trusted image", "image tag", "tag"), ["DL3006", "DL3007"]),
-    (("healthcheck", "health check"), ["DL3057"]),
-    (("add instruction", "copy instead", " copy ", " add "), ["DL3020"]),
-    (("update instruction", "apt-get update", "update alone", "cache"), ["DL3009", "DL3059"]),
-    (("verified package", "pin", "package version", "package"), ["DL3008", "DL3013", "DL3016", "DL3018"]),
-    (("expose", "port"), ["DL3011"]),
-    (("shell", "pipefail"), ["DL4006"]),
+    (r"\buser for the container\b|\bcontainer user\b|\bnon-root\b", ["DL3002", "DL3004"]),
+    (r"\btrusted base images?\b|\bbase images?\b", ["DL3006", "DL3007"]),
+    (r"\bunnecessary packages\b", ["DL3015"]),
+    (r"\bhealthcheck\b", ["DL3057"]),
+    (r"\bupdate instructions?\b", ["DL3009", "DL3059"]),
+    (r"\bcopy is used instead of add\b|\badd instructions?\b", ["DL3020"]),
+    (r"\bverified packages\b", ["DL3008", "DL3013", "DL3016", "DL3018"]),
 ]
 
 
@@ -59,9 +59,8 @@ def map_differences_to_rules(names: List[str], reqs: List[str], out_path) -> Pat
     else:
         rules = set()
         for line in diffs:
-            text = f" {line.lower().replace(',', ' ')} "
-            for keywords, codes in RULE_MAP:
-                if any(k in text for k in keywords):
+            for pattern, codes in RULE_MAP:
+                if re.search(pattern, line, re.I):
                     rules.update(codes)
         body = "\n".join(sorted(rules)) if rules else NO_MAPPING_FOUND
     out_path = Path(out_path)

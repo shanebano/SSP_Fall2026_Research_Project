@@ -18,7 +18,7 @@ def test_load_text_pair(tmp_path):
 
 def test_map_differences_to_rules(tmp_path):
     out = ex.map_differences_to_rules(["Container user"], ["Container user,Ensure user is non-root"], tmp_path / "a.txt")
-    assert out.read_text().splitlines() == ["DL3002"]
+    assert out.read_text().splitlines() == ["DL3002", "DL3004"]
     none = ex.map_differences_to_rules([NO_NAME_DIFF], [NO_REQ_DIFF], tmp_path / "b.txt")
     assert none.read_text().strip() == ex.NO_DIFF_FOUND
     nomap = ex.map_differences_to_rules(["Audit logging"], [], tmp_path / "c.txt")
