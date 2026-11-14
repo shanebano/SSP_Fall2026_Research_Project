@@ -18,7 +18,11 @@ LLM used: TBD
 - 'element_requirements_diff.txt' : one 'Name,req' per line or ' No difference in regards to elemnet requirements'
 
 
-**Task 3
+**Task 3 (cisdiff/executor.py)
+- 'load_text_pair' : reads the two Task-2 TEXT files
+- 'map_differences_to_rules' : writes the Hadolint rules mapped to the differences, or 'NO DIFFERENCES FOUND' / 'NO MAPPING FOUND'
+- 'run_hadolint' : runs Hadolint on a folder of Dockerfiles and returns a pandas DataFrame (all rules if nothing mapped, otherwise only the listed rules)
+- 'write_results_csv' : writes a CSV with FilePath, DefaultSeverity, RULEID, COUNT
 
 
 
